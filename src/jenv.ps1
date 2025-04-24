@@ -83,8 +83,8 @@ foreach ($java in $wrongJavaPaths) {
         # Prepend JEnv
         $systemPath = , $root + $systemPath
 
-        Write-Host ("JEnv 在您的计算机 PATH 环境变量中发现了 java 可执行文件.`nJEnv 需要在 PATH 中放置一个 java 虚拟可执行文件才能正常工作.`n因此您需要手动从 PATH 中移除任何其他 java 可执行文件.`n或者您也可以将 '{0}' 放置在机器 PATH 的顶部" -f $root)
-        switch (Open-Prompt "JEnv 安装" "您想将 JEnv 附加到机器路径的开头吗?(此操作需要管理员权限！)" "是", "否" ("将 JEnv ({0}) 附加到机器 PATH 环境变量的开头" -f $root), "中止并退出脚本" 1) {
+        Write-Host ("JEnv 在您的计算机 PATH 环境变量中发现了 java 可执行文件.`nJEnv 需要在 PATH 中放置一个 java 虚拟可执行文件才能正常工作.`n因此您需要手动从 PATH 中移除任何其他 java 可执行文件.`n或者您也可以将 '{0}' 放置在系统 PATH 的开始" -f $root)
+        switch (Open-Prompt "JEnv 安装" "您想将 JEnv 附加到系统路径的开头吗? (此操作需要管理员权限！)" "是", "否" ("将 JEnv ({0}) 附加系统 PATH 环境变量的开头" -f $root), "中止并退出脚本" 1) {
             0 {
                 Write-Host "好的.这可能需要几秒钟时间"
                 # Write to PATH
@@ -110,7 +110,7 @@ foreach ($java in $wrongJavaPaths) {
         # Prepend JEnv
         $userPath = , $root + $userPath
 
-        Write-Host ("JEnv 在您的用户 PATH 环境变量中发现了 java 可执行文件.`nJEnv 需要在 PATH 中放置一个 java 虚拟可执行文件才能正常工作.`n因此您需要手动从 PATH 中移除任何其他 java 可执行文件.`n或者您也可以将 '{0}' 放置在用户 PATH 的顶部" -f $root)
+        Write-Host ("JEnv 在您的用户 PATH 环境变量中发现了 java 可执行文件.`nJEnv 需要在 PATH 中放置一个 java 虚拟可执行文件才能正常工作.`n因此您需要手动从 PATH 中移除任何其他 java 可执行文件.`n或者您也可以将 '{0}' 放置在用户 PATH 的开始" -f $root)
         switch (Open-Prompt "JEnv 安装" "您想将 JEnv 附加到用户路径的开头吗?" "是", "否" ("将 JEnv ({0}) 附加到用户 PATH 环境变量的开头" -f $root), "中止并退出脚本" 1) {
             0 {
                 Write-Host "好的.这可能需要几秒钟时间"
@@ -118,7 +118,7 @@ foreach ($java in $wrongJavaPaths) {
                 [System.Environment]::SetEnvironmentVariable("PATH", $userPath -join ";", [System.EnvironmentVariableTarget]::User) # Set globally
             }
             1 {
-                Write-Host "已中止. PATH 将仅为此 shell 会话修改.您应该考虑手动更改 PATH"
+                Write-Host "已中止. PATH 将仅为此 shell 会话修改. 您应该考虑手动更改 PATH"
             }
         }
         break

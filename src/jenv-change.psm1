@@ -8,7 +8,7 @@ function Invoke-Change {
 
     if ($help) {
         Write-Host '"jenv change <name>"'
-        Write-Host '使用此命令, 您可以全局设置 JAVA_HOME 和要使用的 Java 版本.这将被 "jenv local" 和 "jenv use" 覆盖'
+        Write-Host '使用此命令, 您可以全局设置 JAVA_HOME 和要使用的 Java 版本. 这将被 "jenv local" 和 "jenv use" 覆盖'
         Write-Host '<name> 是您通过 "jenv add <name> <path>" 分配给路径的别名'
         return
     }
@@ -20,7 +20,7 @@ function Invoke-Change {
         return
     }
     else {
-        Write-Host "全局设置 JAVA_HOME.这可能需要一些时间"
+        Write-Host "全局设置 JAVA_HOME. 这可能需要一些时间"
         $config.global = $jenv.path
         $Env:JAVA_HOME = $jenv.path # Set for powershell users
         if ($output) {
