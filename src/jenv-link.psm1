@@ -14,15 +14,15 @@ function Invoke-Link {
     }
 
     $payload = @'
-        @echo off
-        for /f "delims=" %%i in ('jenv getjava') do set "var=%%i"
+@echo off
+for /f "delims=" %%i in ('jenv getjava') do set "var=%%i"
 
-        if exist "%var%/bin/{0}.exe" (
-            "%var%/bin/{0}.exe" %*
-        ) else (
-            echo There was an error:
-            echo %var%
-        )
+if exist "%var%/bin/{0}.exe" (
+    "%var%/bin/{0}.exe" %*
+) else (
+    echo 出现错误:
+    echo %var%
+)
 '@ -f $executable
 
     Set-Content ((get-item $PSScriptRoot).parent.fullname + "/$executable.bat") $payload
