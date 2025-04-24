@@ -7,21 +7,21 @@ function Invoke-Uninstall {
 
     if ($help) {
         Write-Host '"jenv uninstall" <name>'
-        Write-Host 'This command deletes jenv and restores the specified jenv as java'
-        Write-Host '<name> is the alias you asigned to the path with "jenv add <name> <path>"'
+        Write-Host '此命令删除 jenv 并将指定的 jenv 恢复为 java'
+        Write-Host '<name> 是您通过 "jenv add <name> <path>" 分配给路径的别名'
         return
     }
 
     # Check if specified JEnv is avaible
     $jenv = $config.jenvs | Where-Object { $_.name -eq $name }
     if ($null -eq $jenv) {
-        Write-Host ('Theres no JEnv with name {0} Consider using "jenv list"' -f $name)
+        Write-Host ('没有名为 {0} 的 JEnv.考虑使用 "jenv list"' -f $name)
         return
     }
 
     # Abort Uninstall
-    if ((Open-Prompt "Uninstalling JEnv" "Are you sure you want to delete JEnv entirely from this computer?" "Yes", "No" "This will remove JEnv from your computer", "Last chance to abort the disaster" 1) -eq 1) {
-        Write-Host "Aborted uninstallation"
+    if ((Open-Prompt "卸载 JEnv" "您确定要从此计算机完全删除 JEnv 吗?" "是", "否" "这将从您的计算机中删除 JEnv", "最后一次机会中止操作" 1) -eq 1) {
+        Write-Host "已中止卸载"
         return
     }
 
@@ -58,7 +58,7 @@ function Invoke-Uninstall {
     [System.Environment]::SetEnvironmentVariable("PATH", $userPath, [System.EnvironmentVariableTarget]::User) # Set globally
 
     # Either delete %appdata%/jenv or keep config
-    $uninstall = Open-Prompt "Uninstalling JEnv" "Do you want to keep your config file" "Yes", "No" "If you reinstall JEnv later it will use all your configured java_homes and locals", "If you reinstall JEnv it has to be set up from the ground on. Pick this if you dont plan reinstalling JEnv" 0
+    $uninstall = Open-Prompt "卸载 JEnv" "您想保留配置文件吗" "是", "否" "如果您稍后重新安装 JEnv, 它将使用所有已配置的 java_homes 和本地设置", "如果您重新安装 JEnv, 它必须从头开始设置.如果您不打算重新安装 JEnv, 请选择此项" 0
     if ($uninstall -eq 1) {
         Remove-Item $env:appdata/jenv -recurse -force
     }
@@ -68,8 +68,6 @@ function Invoke-Uninstall {
     Remove-Item (get-item $PSScriptRoot).Parent.FullName -Recurse -Force
 
     # Exit the script so jenv.ps1 wont continue to run
-    Write-Host "Successfully uninstalled JEnv"
+    Write-Host "已成功卸载 JEnv"
     Exit 0
-
-
 }

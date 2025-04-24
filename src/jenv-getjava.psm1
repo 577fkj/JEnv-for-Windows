@@ -1,4 +1,3 @@
-
 function Get-Java {
     param (
         [object]$config
@@ -24,6 +23,6 @@ function Get-Java {
     # No JEnv set
     else {
         # ATTENTION: Parantheses in statement will break the batch
-        Write-Output 'No global java version found. Use jenv change to set one'
+        Write-Output '未找到全局 Java 版本. 使用 jenv change 设置一个'
     }
 }

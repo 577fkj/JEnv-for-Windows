@@ -7,24 +7,24 @@ function Invoke-Local {
 
     if ($help) {
         Write-Host '"jenv local <name>"'
-        Write-Host 'This command allows you to specify a java version that will always be used in this folder and all subfolders'
-        Write-Host 'This is overwriten by "jenv use"'
-        Write-Host '<name> is the alias of the JEnv you want to specify'
-        Write-Host "Attention! You might have to call jenv first before it changes your JAVA_HOME to the local environment. The java command will work out of the box"
+        Write-Host '此命令允许您指定一个 Java 版本, 它将始终在此文件夹和所有子文件夹中使用'
+        Write-Host '这会被 "jenv use" 覆盖'
+        Write-Host '<name> 是您要指定的 JEnv 的别名'
+        Write-Host "注意！在更改 JAVA_HOME 到本地环境之前, 您可能需要先调用 jenv.java 命令将直接可用"
         return
     }
 
     # Remove the local JEnv
     if ($name -eq "remove") {
         $config.locals = @($config.locals | Where-Object { $_.path -ne (Get-Location) })
-        Write-Output "Your local JEnv was unset"
+        Write-Output "您的本地 JEnv 已被取消设置"
         return
     }
 
     # Check if specified JEnv is avaible
     $jenv = $config.jenvs | Where-Object { $_.name -eq $name }
     if ($null -eq $jenv) {
-        Write-Output "Theres no JEnv with name $name Consider using `"jenv list`""
+        Write-Output "没有名为 $name 的 JEnv. 考虑使用 `"jenv list`""
         return
     }
 
@@ -33,7 +33,7 @@ function Invoke-Local {
         if ($jenv.path -eq (Get-Location)) {
             # if path is used replace with new version
             $jenv.name = $name
-            Write-Output ("Your replaced your java version for {0} {1}" -f (Get-Location), $name)
+            Write-Output ("您已替换 {0} 的 Java 版本为 {1}" -f (Get-Location), $name)
             return
         }
     }
@@ -44,5 +44,5 @@ function Invoke-Local {
         name = $name
     }
 
-    Write-Output ("{0} is now your local java version for {1}" -f (Get-Location), $name)
+    Write-Output ("{0} 现在是 {1} 的本地 Java 版本" -f $name, (Get-Location))
 }

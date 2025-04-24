@@ -3,8 +3,8 @@
 # Check if PowerShell is in PATH
 if ! command -v pwsh &> /dev/null; then
     if ! command -v powershell &> /dev/null; then
-        echo "Neither pwsh.exe nor powershell.exe was found in your PATH."
-        echo "Please install PowerShell as it is required."
+        echo "在您的 PATH 中找不到 pwsh.exe 或 powershell.exe."
+        echo "请安装 PowerShell, 这是必需的."
         exit 1
     else
         ps=powershell

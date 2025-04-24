@@ -6,10 +6,10 @@ function Invoke-Link {
 
     if ($help) {
         Write-Host '"jenv link" <executable>'
-        Write-Host "With this command you can create shortcuts for executables inside JAVA_HOME"
-        Write-Host '<executable> is the name of the binary file for example "javac" or "javaw"'
-        Write-Host 'For example enable javac with: "jenv link javac"'
-        Write-Host 'List all registered java versions with "jenv list"'
+        Write-Host "使用此命令, 您可以为 JAVA_HOME 内的可执行文件创建快捷方式"
+        Write-Host '<executable> 是二进制文件的名称, 例如 "javac" 或 "javaw"'
+        Write-Host '例如, 使用 "jenv link javac" 启用 javac'
+        Write-Host '使用 "jenv list" 列出所有已注册的 Java 版本'
         return
     }
 

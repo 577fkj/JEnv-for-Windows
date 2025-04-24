@@ -5,8 +5,8 @@ where /q pwsh
 IF ERRORLEVEL 1 (
     where /q powershell
     IF ERRORLEVEL 1 (
-        echo Neither pwsh.exe nor powershell.exe was found in your path.
-        echo Please install powershell it is required
+        echo 在您的路径中找不到 pwsh.exe 或 powershell.exe.
+        echo 请安装 PowerShell, 这是必需的
         exit /B
     ) ELSE (
         set ps=powershell

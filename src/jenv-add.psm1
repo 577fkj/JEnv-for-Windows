@@ -8,31 +8,31 @@ function Invoke-Add {
 
     if ($help) {
         Write-Host '"jenv add" <name> <path>'
-        Write-Host "With this command you can tell JEnv which java versions you have installed"
-        Write-Host '<name> is an alias you have to give the java version for easier referencing. It cannot be remove'
-        Write-Host '<path> is the path to the parent of your bin folder. For example: "C:\Program Files\Java\jdk-17"'
-        Write-Host 'You have to register your JEnvs first before you can use "jenv change", "jenv use" or "jenv local"'
-        Write-Host 'List all registered java versions with "jenv list"'
-        Write-Host 'This command is not used to specify local JEnvs. Use "jenv local" for this approach'
+        Write-Host "通过此命令, 您可以告诉 JEnv 您已安装的 Java 版本"
+        Write-Host '<name> 是您必须为 Java 版本提供的别名, 以便更容易引用.它不能是 remove'
+        Write-Host '<path> 是 bin 文件夹的父路径.例如: "C:\Program Files\Java\jdk-17"'
+        Write-Host '您必须先注册 JEnv, 然后才能使用 "jenv change"、"jenv use" 或 "jenv local"'
+        Write-Host '使用 "jenv list" 列出所有已注册的 Java 版本'
+        Write-Host '此命令不用于指定本地 JEnv. 使用 "jenv local" 进行此操作'
         return
     }
 
     # Name cannot be remove due to the local remove
     if ($name -eq "remove") {
-        Write-Output 'Your JEnv name cannot be "remove". Checkout "jenv remove"'
+        Write-Output '您的 JEnv 名称不能是 "remove". 查看 "jenv remove"'
         return
     }
 
     # Check if name is already used
     foreach ($jenv in $config.jenvs) {
         if ($jenv.name -eq $name) {
-            Write-Output "Theres already a JEnv with the name $name. Consider using ""jenv list"""
+            Write-Output "已经存在名为 $name 的 JEnv. 考虑使用 ""jenv list"""
             return
         }
     }
     # Check if the path is a valid java home
     if (!(Test-Path -Path $path/bin/java.exe -PathType Leaf)) {
-        Write-Output ($path + "/bin/java.exe not found. Your Path is not a valid JAVA_HOME")
+        Write-Output ($path + "/bin/java.exe 未找到. 您的路径不是有效的 JAVA_HOME")
         return
     }
 
@@ -41,5 +41,5 @@ function Invoke-Add {
         name = $name
         path = $path
     }
-    Write-Output ("Successfully added the new JEnv: " + $name)
+    Write-Output ("成功添加新的 JEnv: " + $name)
 }

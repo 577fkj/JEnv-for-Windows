@@ -9,6 +9,6 @@ if [ -x "$var/bin/java" ]; then
     "$var/bin/java" "$@"
 else
     # Print an error message if the specified Java executable does not exist
-    echo "There was an error:"
+    echo "出现错误:"
     echo "$var"
 fi

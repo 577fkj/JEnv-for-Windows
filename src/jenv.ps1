@@ -83,20 +83,20 @@ foreach ($java in $wrongJavaPaths) {
         # Prepend JEnv
         $systemPath = , $root + $systemPath
 
-        Write-Host ("JEnv found a java executable in your machines PATH environment variable.`nJEnv places a dummy java executable inside your PATH to work properly.`nTherefore you need to manually remove any other java executable from the PATH.`nOptionally you could also put '{0}' at the top of your machines PATH" -f $root)
-        switch (Open-Prompt "JEnv install" "Would you like to append JEnv to the start of your machines path? (This operation requires administrator rights!)" "Yes", "No" ("Append JEnv ({0}) to the start of your machines PATH environment variable" -f $root), "Abort and exit the script" 1) {
+        Write-Host ("JEnv 在您的计算机 PATH 环境变量中发现了 java 可执行文件.`nJEnv 需要在 PATH 中放置一个 java 虚拟可执行文件才能正常工作.`n因此您需要手动从 PATH 中移除任何其他 java 可执行文件.`n或者您也可以将 '{0}' 放置在机器 PATH 的顶部" -f $root)
+        switch (Open-Prompt "JEnv 安装" "您想将 JEnv 附加到机器路径的开头吗?(此操作需要管理员权限！)" "是", "否" ("将 JEnv ({0}) 附加到机器 PATH 环境变量的开头" -f $root), "中止并退出脚本" 1) {
             0 {
-                Write-Host "Ok. This could take a few seconds"
+                Write-Host "好的.这可能需要几秒钟时间"
                 # Write to PATH
                 try {
                     [System.Environment]::SetEnvironmentVariable("PATH", $systemPath -join ";", [System.EnvironmentVariableTarget]::Machine) # Set globally
                 }
                 catch [System.Management.Automation.MethodInvocationException] {
-                    Write-Host "JEnv wants to change your system environment vars. Therefore you need to restart it with administration rights. This should only once be required. If you do not want to, you have to call JEnv on every terminal opening to change your session vars"
+                    Write-Host "JEnv 想要更改您的系统环境变量. 因此, 您需要以管理员权限重新启动它.这应该只需要一次.如果您不想这样做, 则必须在每次打开终端时调用 JEnv 来更改会话变量"
                 }
             }
             1 {
-                Write-Host "Aborted. The PATH will only be modified for this shell session. You should consider changing the PATH manually"
+                Write-Host "已中止. PATH 将仅为此 shell 会话修改.您应该考虑手动更改 PATH"
             }
         }
         # Its fine to break here. If we already put something in the machines path we do not need to change the users path as windows checks the machines path first
@@ -110,15 +110,15 @@ foreach ($java in $wrongJavaPaths) {
         # Prepend JEnv
         $userPath = , $root + $userPath
 
-        Write-Host ("JEnv found a java executable in your users PATH environment variable.`nJEnv places a dummy java executable inside your PATH to work properly.`nTherefore you need to manually remove any other java executable from the PATH.`nOptionally you could also put '{0}' at the top of your users PATH" -f $root)
-        switch (Open-Prompt "JEnv install" "Would you like to append JEnv to the start of your users path?" "Yes", "No" ("Append JEnv ({0}) to the start of your users PATH environment variable" -f $root), "Abort and exit the script" 1) {
+        Write-Host ("JEnv 在您的用户 PATH 环境变量中发现了 java 可执行文件.`nJEnv 需要在 PATH 中放置一个 java 虚拟可执行文件才能正常工作.`n因此您需要手动从 PATH 中移除任何其他 java 可执行文件.`n或者您也可以将 '{0}' 放置在用户 PATH 的顶部" -f $root)
+        switch (Open-Prompt "JEnv 安装" "您想将 JEnv 附加到用户路径的开头吗?" "是", "否" ("将 JEnv ({0}) 附加到用户 PATH 环境变量的开头" -f $root), "中止并退出脚本" 1) {
             0 {
-                Write-Host "Ok. This could take a few seconds"
+                Write-Host "好的.这可能需要几秒钟时间"
                 # Write to PATH
                 [System.Environment]::SetEnvironmentVariable("PATH", $userPath -join ";", [System.EnvironmentVariableTarget]::User) # Set globally
             }
             1 {
-                Write-Host "Aborted. The PATH will only be modified for this shell session. You should consider changing the PATH manually"
+                Write-Host "已中止. PATH 将仅为此 shell 会话修改.您应该考虑手动更改 PATH"
             }
         }
         break
@@ -178,16 +178,16 @@ if ($output) {
 #endregion
 
 if ($help -and $action -eq "") {
-    Write-Host '"jenv list"                            List all registered Java-Envs.'
-    Write-Host '"jenv add <name> <path>"               Adds a new Java-Version to JEnv which can be refferenced by the given name'
-    Write-Host '"jenv remove <name>"                   Removes the specified Java-Version from JEnv'
-    Write-Host '"jenv change <name>"                   Applys the given Java-Version globaly for all restarted shells and this one'
-    Write-Host '"jenv use <name>"                      Applys the given Java-Version locally for the current shell'
-    Write-Host '"jenv local <name>"                    Will use the given Java-Version whenever in this folder. Will set the Java-version for all subfolders as well'
-    Write-Host '"jenv link <executable>"               Creates shortcuts for executables inside JAVA_HOME. For example "javac"'
-    Write-Host '"jenv uninstall <name>"                Deletes JEnv and restores the specified java version to the system. You may keep your config file'
-    Write-Host '"jenv autoscan [--yes|-y] ?<path>?"    Will scan the given path for java installations and ask to add them to JEnv. Path is optional and "--yes|-y" accepts defaults.'
-    Write-Host 'Get help for individual commands using "jenv <list/add/remove/change/use/local> --help"'
+    Write-Host '"jenv list"                            列出所有已注册的 Java 环境.'
+    Write-Host '"jenv add <name> <path>"               添加新的 Java 版本到 JEnv, 可通过给定名称引用'
+    Write-Host '"jenv remove <name>"                   从 JEnv 中移除指定的 Java 版本'
+    Write-Host '"jenv change <name>"                   全局应用指定的 Java 版本, 对所有重启的 shell 和当前 shell 生效'
+    Write-Host '"jenv use <name>"                      在当前 shell 本地应用指定的 Java 版本'
+    Write-Host '"jenv local <name>"                    在当前文件夹及所有子文件夹中使用指定的 Java 版本'
+    Write-Host '"jenv link <executable>"               为 JAVA_HOME 内的可执行文件创建快捷方式, 例如 "javac"'
+    Write-Host '"jenv uninstall <name>"                删除 JEnv 并将指定的 Java 版本恢复到系统中.您可以保留配置文件'
+    Write-Host '"jenv autoscan [--yes|-y] ?<path>?"    扫描指定路径查找 Java 安装并询问是否添加到 JEnv.路径是可选的, "--yes|-y" 表示接受默认值.'
+    Write-Host '通过 "jenv <list/add/remove/change/use/local> --help" 获取各命令的帮助'
 }
 else {
 

@@ -8,9 +8,9 @@ function Invoke-Use {
 
     if ($help) {
         Write-Host '"jenv use <name>"'
-        Write-Host 'With this command you set your JAVA_HOME and the version of java to be used by your current shell session.'
-        Write-Host '<name> is the alias you assigned to the path with "jenv add <name> <path>"'
-        Write-Host 'Careful this overwrites "jenv local"'
+        Write-Host '使用此命令, 您可以为当前 shell 会话设置 JAVA_HOME 和要使用的 Java 版本.'
+        Write-Host '<name> 是您通过 "jenv add <name> <path>" 分配给路径的别名'
+        Write-Host '注意, 这会覆盖 "jenv local"'
         return
     }
 
@@ -20,7 +20,7 @@ function Invoke-Use {
         if ($output) {
             Set-Content -path "jenv.use.tmp" -value "remove" # Create temp file so no restart of the active shell is required
         }
-        Write-Host "Your session JEnv was unset"
+        Write-Host "您的会话 JEnv 已被取消设置"
         return
     }
 
@@ -28,7 +28,7 @@ function Invoke-Use {
     # Check if specified JEnv is avaible
     $jenv = $config.jenvs | Where-Object { $_.name -eq $name }
     if ($null -eq $jenv) {
-        Write-Host ('Theres no JEnv with name {0} Consider using "jenv list"' -f $name)
+        Write-Host ('没有名为 {0} 的 JEnv. 考虑使用 "jenv list"' -f $name)
         return
     }
     else {
@@ -38,6 +38,6 @@ function Invoke-Use {
             Set-Content -path "jenv.home.tmp" -value $jenv.path # Create temp file so no restart of the active shell is required
             Set-Content -path "jenv.use.tmp" -value $jenv.path # Create temp file so no restart of the active shell is required
         }
-        Write-Host 'JEnv changed for the current shell session. Careful this overwrites "jenv local"'
+        Write-Host '已为当前 shell 会话更改 JEnv. 注意, 这会覆盖 "jenv local"'
     }
 }

@@ -8,9 +8,9 @@ function Invoke-AutoScan {
 
     if ($help) {
         Write-Host '"jenv autoscan <path>"'
-        Write-Host 'This will search for any java.exe files in the given path and prompt the user to add them to JEnv'
-        Write-Host '<path> is the path to search like "C:\Program Files\Java"'
-        Write-Host 'If <path> is not provided, JEnv will search the entire system'
+        Write-Host '这将在给定路径中搜索任何 java.exe 文件, 并提示用户将其添加到 JEnv'
+        Write-Host '<path> 是要搜索的路径, 如 "C:\Program Files\Java"'
+        Write-Host '如果未提供 <path>, JEnv 将搜索整个系统'
         return
     }
 
@@ -30,7 +30,7 @@ function Invoke-AutoScan {
     }
 
     # Iterate over paths and find java.exe
-    Write-Host "JEnv is now searching for java.exe on your Computer. This could take some time..."
+    Write-Host "JEnv 正在搜索您计算机上的 java.exe.这可能需要一些时间..."
     $javaExecutables = @()
     foreach ($path in $paths) {
         $path = $path + "\\"
@@ -56,12 +56,12 @@ function Invoke-AutoScan {
         if ($acceptDefaults) {
             Invoke-Add $config $false $version ($java -replace "\\bin\\java\.exe$", "")
         } else {
-            switch (Open-Prompt "JEnv autoscan" ("Found java.exe at {0}. Default name is: '{1}'. Do you want to add it to the list?" -f $java, $version) "Yes", "No", "Rename" ("This will add {0} with alias '{1}' to JEnv" -f $java, $version), ("Skip {0}" -f $java), "Change the default name" 1) {
+            switch (Open-Prompt "JEnv 自动扫描" ("在 {0} 找到 java.exe.默认名称为: '{1}'.您想将其添加到列表中吗?" -f $java, $version) "是", "否", "重命名" ("这将使用别名 '{1}' 将 {0} 添加到 JEnv" -f $java, $version), ("跳过 {0}" -f $java), "更改默认名称" 1) {
                 0 {
                     Invoke-Add $config $false $version ($java -replace "\\bin\\java\.exe$", "")
                 }
                 2 {
-                    Invoke-Add $config $false (Read-Host ("Enter the new name for {0}" -f $java)) ($java -replace "\\bin\\java\.exe$", "")
+                    Invoke-Add $config $false (Read-Host ("为 {0} 输入新名称" -f $java)) ($java -replace "\\bin\\java\.exe$", "")
                 }
             }
         }
